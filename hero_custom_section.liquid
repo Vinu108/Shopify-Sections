@@ -1,0 +1,182 @@
+<section class="custom_hero">
+    <div class="container">
+        <div class="custom_hero-inner">
+            <div class="custom_hero-content">
+                {% if section.settings.heading != blank %}
+                    <h1>{{ section.settings.heading }}</h1>
+                    {% endif %}
+                    {% if section.settings.description != blank %}
+                    <p class="custom_hero-desc">
+                        {{ section.settings.description }}
+                        </p>
+                        {% endif %}
+                        {% if section.settings.button_label != blank %}
+                        <a class="custom_hero-btn" href="{{ section.settings.button_link }}">{{ section.settings.button_label }}</a>
+                        {% endif %}
+                        {% if section.settings.sub_txet != blank %}
+                        <div class="custom_line-text">
+                            <div class="custom_hero-subtext">
+                                {{ section.settings.sub_txet }}
+                                </div>
+                            </div>
+                            {% endif %}
+                </div>
+
+
+
+{% if section.settings.image != blank %}
+<div class="custom_hero-image">
+    <img src="{{ section.settings.image | img_url:'master' }}">
+    </div>
+    {% endif %}
+
+            </div>
+
+<div class="divider"></div>
+
+<div class="testimonial_wrapper">
+    <div class="swiper my_swiper">
+<div class="swiper_wrapper">
+
+    {% for block in section.blocks %}
+        <div class="custom_testimonial-wrapper">
+            {% if  block.settings.testimonial_text != blank %}
+    <p class="custom_testimonial-text">
+        {{ block.settings.testimonial_text }}
+    </p>
+    {% endif %}
+        </div>
+        {% endfor %}
+    </div>
+
+        </div>
+
+    </div>
+    </div>
+    </section>
+
+<style>
+
+    .custom_hero{
+        {% if section.settings.bg_image != blank %}
+    background-image:url('{{ section.settings.bg_image }}');
+    {% endif %}
+    background-repeat:no-repeat;
+    background-size:cover;
+    background-position:center;
+    With:100%;
+    }
+    .custom_hero .container{
+    width:100%;
+    max-width:1280px;
+    margin:0 auto;
+    padding:0 16px;
+    }
+
+    .custom_hero-inner{
+    display:grid;
+    grid-template-coulmn: 1.1fr 0.9fr;
+    align-items:center;
+    justify-content:center;
+    gap:40px;
+    }
+
+    .custom_hero h1{
+   font-family: Cormorant;
+    font-weight: 700;
+    font-style: Bold;
+    font-size: 56px;
+    leading-trim: NONE;
+    line-height: 120%;
+    letter-spacing: 0.2px;
+    background: linear-gradient(90deg, #9333EA 0%, #2563EB 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    color: transparent;
+    margin: 0 0 24px;
+
+    }
+.custom_hero-desc{
+
+    font-family: Open Sans;
+    font-weight: 400;
+    font-style: Regular;
+    font-size: 20px;
+    leading-trim: NONE;
+    line-height: 129%;
+    letter-spacing: 0%;
+    color: #000000CC;
+    margin: 0 0 32px;
+}
+    </style>
+
+
+{% schema %}
+{
+"name":"Hero With Testimonial",
+"settings": [
+    {
+    "type": "image_picker",
+    "id":"bg_image",
+    "label":"Select Background Image"
+    },
+    {
+    "type": "image_picker",
+    "id":"mob_image",
+    "label":"Select Mobile Image"
+    },
+    {
+    "type": "text",
+    "id":"heading",
+    "label": "Heading"
+    },
+    {
+    "type": "text",
+    "id":"description",
+    "label":"Description"
+    },
+    {
+    "type": "text",
+    "id":"button_label",
+    "label":"Button"
+    },
+     {
+    "type": "url",
+    "id":"button_link",
+    "label":"Button Link"
+    },
+     {
+    "type": "text",
+    "id":"sub_txet",
+    "label":"Sub Text"
+    },
+     {
+    "type": "image_picker",
+    "id":"image",
+    "label":"Select Image"
+    },
+],
+"blocks": [
+    {
+    "type": "testimonial",
+    "name":"Testimonial",
+    "settings": [
+        {
+        "type": "text",
+        "id":"testimonial_text",
+        "label": "Testimonial Text",
+        
+        }
+    ]
+    
+    }
+],
+"presets": [
+    {
+    "name":"Hero With Testimonial"
+    
+    }
+]
+}
+{% endschema %}
