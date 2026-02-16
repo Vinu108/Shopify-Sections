@@ -1,0 +1,472 @@
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css">
+<script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+
+<section class="custom_review">
+  <div class="page-width">
+    <div class="wrapper">
+          {% if section.settings.heading != blank %}
+      <div class="heading_wrapper">
+        {% if section.settings.review_text != blank %}
+          <div class="star_rating_wrapper">
+            <svg xmlns="http://www.w3.org/2000/svg" width="143" height="27" viewBox="0 0 143 27" fill="none">
+              <path d="M13.4023 0L16.4112 9.26073H26.1486L18.2709 14.9842L21.2799 24.2449L13.4023 18.5215L5.52461 24.2449L8.5336 14.9842L0.655953 9.26073H10.3933L13.4023 0Z" fill="#FFA600"/>
+              <path d="M42.3512 0L45.3602 9.26073H55.0975L47.2199 14.9842L50.2289 24.2449L42.3512 18.5215L34.4736 24.2449L37.4826 14.9842L29.6049 9.26073H39.3422L42.3512 0Z" fill="#FFA600"/>
+              <path d="M71.3 0L74.309 9.26073H84.0463L76.1686 14.9842L79.1776 24.2449L71.3 18.5215L63.4223 24.2449L66.4313 14.9842L58.5537 9.26073H68.291L71.3 0Z" fill="#FFA600"/>
+              <path d="M100.249 0L103.258 9.26073H112.995L105.118 14.9842L108.127 24.2449L100.249 18.5215L92.3713 24.2449L95.3803 14.9842L87.5026 9.26073H97.2399L100.249 0Z" fill="#FFA600"/>
+              <path d="M129.198 0L132.207 9.26073H141.944L134.066 14.9842L137.075 24.2449L129.198 18.5215L121.32 24.2449L124.329 14.9842L116.451 9.26073H126.189L129.198 0Z" fill="#FFA600"/>
+            </svg>
+            <p class="review_text">{{ section.settings.review_text }}</p>
+          </div>
+        {% endif %}
+        {% if section.settings.heading != blank %}
+          <h2 class="heading">{{ section.settings.heading }}</h2>
+        {% endif %}
+        {% if section.settings.sub_text %}
+          <p class="sub_text">{{ section.settings.sub_text }}</p>
+        {% endif %}
+      </div>
+      {% endif %}
+      <div class="swiper mySwiper">
+        <div class="wrapper_text_reviw_card swiper-wrapper">
+          {% for block in section.blocks %}
+            <div class="swiper-slide">
+              <div class="card_wrapper">
+                {% if block.settings.img_rew != blank %}
+                <div class="image_review_wrapper">
+                    <img src="{{ block.settings.img_rew | img_url:'master' }}">
+                    </div>
+                    {% endif %}
+<div class="cs_content_wrapper">
+                    {% if block.settings.text != blank %}
+                <div class="svg_wrapper">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="129" height="20" viewBox="0 0 129 20" fill="none">
+                    <path d="M3.92985 19.3157L5.62011 12.1722L0 7.36945L7.40306 6.73751L10.3024 0L13.2017 6.73617L20.6034 7.3681L14.9833 12.1708L16.6749 19.3144L10.3024 15.5228L3.92985 19.3157Z" fill="#FFAD3B"/>
+                    <path d="M30.9716 19.3157L32.6619 12.1722L27.0417 7.36945L34.4448 6.73751L37.3441 0L40.2435 6.73617L47.6452 7.3681L42.0251 12.1708L43.7167 19.3144L37.3441 15.5228L30.9716 19.3157Z" fill="#FFAD3B"/>
+                    <path d="M58.0133 19.3157L59.7036 12.1722L54.0835 7.36945L61.4866 6.73751L64.3859 0L67.2852 6.73617L74.6869 7.3681L69.0668 12.1708L70.7584 19.3144L64.3859 15.5228L58.0133 19.3157Z" fill="#FFAD3B"/>
+                    <path d="M85.0558 19.3157L86.7461 12.1722L81.126 7.36945L88.529 6.73751L91.4284 0L94.3277 6.73617L101.729 7.3681L96.1093 12.1708L97.8009 19.3144L91.4284 15.5228L85.0558 19.3157Z" fill="#FFAD3B"/>
+                    <path d="M112.097 19.3157L113.787 12.1722L108.167 7.36945L115.57 6.73751L118.469 0L121.368 6.73617L128.77 7.3681L123.15 12.1708L124.842 19.3144L118.469 15.5228L112.097 19.3157Z" fill="#FFAD3B"/>
+                  </svg>
+                </div>
+                {% endif %}
+                {% if block.settings.text != blank %}
+                  <div class="text_wrapper">
+                    {{ block.settings.text }}
+                  </div>
+                {% endif %}
+                <div class="wrapper_name_varify_text">
+                  {% if block.settings.text1 != blank %}
+                    <div class="name">{{ block.settings.text1 }}</div>
+                  {% endif %}
+                    {% if block.settings.varify != blank -%}
+                  <div class="varinfy_wrapper">
+                    <div class="var_svg">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 13 13" fill="none">
+                        <path d="M13 6.5C13 10.0899 10.0899 13 6.5 13C2.91015 13 0 10.0899 0 6.5C0 2.91015 2.91015 0 6.5 0C10.0899 0 13 2.91015 13 6.5ZM9.77464 4.03786C9.53666 3.79988 9.15083 3.79988 8.91285 4.03786C8.9071 4.0436 8.90171 4.04969 8.89669 4.05609L6.07539 7.6511L4.3744 5.95012C4.13642 5.71214 3.75059 5.71214 3.51261 5.95012C3.27464 6.1881 3.27464 6.57393 3.51261 6.81191L5.66285 8.96214C5.90083 9.20012 6.28666 9.20012 6.52464 8.96214C6.52994 8.95684 6.53494 8.95126 6.53962 8.9454L9.78329 4.89082C10.0126 4.65223 10.0097 4.27291 9.77464 4.03786Z" fill="#5E0300"/>
+                      </svg>
+                    </div>
+                    {% if block.settings.varify != blank -%}
+                      <span class="varify_text">{{ block.settings.varify }}</span>
+                    {%- endif %}
+                  </div>
+{% endif %}
+                </div>
+
+                </div>
+              </div>
+            </div>
+          {% endfor %}
+        </div>
+        {% comment %} <div class="swiper-pagination"></div> {% endcomment %}
+       {% comment %} <div class="prev_next_btns">
+        <div class="swiper-button-prev"></div>
+        <div class="swiper-button-next"></div>
+       </div> {% endcomment %}
+      </div>
+    </div>
+  </div>
+</section>
+<style>
+    .cs_content_wrapper {
+    padding: 20px;
+}
+        section.custom_review {
+        width: 100%;
+        background: #F9F9F9;
+        padding: 90px 0px;
+    }
+   .custom_review .text_wrapper {
+    margin: 10px 0px 0px;
+}
+
+section.custom_review .heading_wrapper {
+    margin: 0 0 50px;
+}
+
+
+.custom_review .var_svg {
+    line-height: 100%;
+    width: 100%;
+}
+    .custom_review p.review_text {
+        font-family: Poppins;
+        font-weight: 500;
+        font-style: Medium;
+        font-size: 14px;
+        leading-trim: NONE;
+        line-height: 17.15px;
+        letter-spacing: 0%;
+        vertical-align: middle;
+        text-transform: capitalize;
+        margin: 0;
+        color: #000000;
+    }
+
+    .custom_review h2.heading {
+        font-family: Poppins;
+        font-weight: 600;
+        font-style: SemiBold;
+        font-size: 52px;
+        leading-trim: NONE;
+        line-height: 100%;
+        letter-spacing: 0%;
+        text-align: center;
+        vertical-align: middle;
+        margin: 10px 0 0;
+    }
+    .custom_review .star_rating_wrapper {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        justify-content: center;
+    }
+
+    .card_wrapper img {
+    width: 100%;
+    border-radius: 10px 10px 0 0;
+}
+
+    .custom_review p.sub_text {
+        font-family: Poppins;
+        font-weight: 400;
+        font-style: Regular;
+        font-size: 16px;
+        leading-trim: NONE;
+        line-height: 28px;
+        letter-spacing: 0%;
+        text-align: center;
+        vertical-align: middle;
+        text-transform: capitalize;
+        color: #000000;
+        margin: 30px 0 0;
+    }
+    .custom_review .card_wrapper {
+        border: 1px solid #DDDDDD;
+        border-radius: 10px;
+        background: #ffffff;
+      
+    }
+    .custom_review .text_wrapper p {
+        font-family: Poppins;
+        font-weight: 400;
+        font-style: Regular;
+        font-size: 14px;
+        leading-trim: NONE;
+        line-height: 22px;
+        letter-spacing: 0%;
+        text-align: center;
+        vertical-align: middle;
+        color: #000;
+    }
+  
+    .custom_review .svg_wrapper {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .custom_review .wrapper_name_varify_text {
+        display: flex;
+        justify-content: space-between;
+    }
+    .custom_review .name {
+        font-family: Poppins;
+        font-weight: 600;
+        font-style: SemiBold;
+        font-size: 16px;
+        leading-trim: NONE;
+        line-height: 130%;
+        letter-spacing: 0%;
+        color: #000;
+    }
+    .custom_review .varinfy_wrapper {
+        display: grid;
+        grid-template-columns: 10px 1fr;
+        gap: 10px;
+        align-items: center;
+    }
+    .custom_review span.varify_text {
+        font-family: Poppins;
+        font-weight: 400;
+        font-style: Regular;
+        font-size: 12px;
+        leading-trim: NONE;
+        line-height: 130%;
+        letter-spacing: 0%;
+        color: #000000;
+        margin: 0;
+    }
+
+    .custom_review .swiper-pagination-progressbar {
+      background: #E7E7E7 !important;
+      position: unset;
+      display: none;
+  }
+   .custom_review .swiper-pagination-progressbar span.swiper-pagination-progressbar-fill{
+   background: #000000 !important;
+  }
+ .custom_review .swiper-button-prev,
+.custom_review .swiper-button-next {
+    display: none;
+}
+
+section.custom_review .wrapper {
+    width: 100%;
+    max-width: 876px;
+    margin: 0 auto;
+}
+  @media (max-width:1440px ){
+section.custom_review {
+
+    padding: 70px 0px;
+}
+}
+
+ 
+  @media (max-width:1280px ){
+.custom_review h2.heading {
+
+    font-size: 45px;
+}
+
+.custom_review .wrapper_text_reviw_card {
+    padding: 30px 0px 0px 0px;
+}
+
+.custom_review p.sub_text {
+   
+    margin: 20px 0 0;
+}
+
+
+}
+
+  @media (max-width:1000px ){
+   .custom_review .swiper-pagination-progressbar {
+      display: block;
+  }
+  
+  .custom_review .card_wrapper {
+
+      margin-bottom: 50px;
+  }
+
+  .custom_review .swiper-button-prev{
+    left: -10px;
+  }
+  
+  
+  .custom_review .swiper-button-next{
+    right: -10px;
+  }
+   .custom_review .swiper{
+    overflow: visible;
+  }
+
+   .custom_review{
+    overflow: hidden;
+   }
+
+   .custom_review .swiper-button-prev,
+.custom_review .swiper-button-next {
+  color: #fff;
+  background: #0F58E5;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.15);
+      display: flex !important;
+      {% comment %} position: unset; {% endcomment %}
+       
+
+}
+
+.custom_review .swiper-button-prev::after,
+.custom_review .swiper-button-next::after {
+  font-size: 18px;
+}
+.custom_review .prev_next_btns{
+  display: flex;
+  justify-content: space-between;
+  
+}
+
+  }
+ @media (max-width: 768px ){
+  .custom_review h2.heading {
+    font-size: 40px;
+  }
+  section.custom_review {
+        padding: 20px 0px 10px;
+    }
+  }
+ @media (max-width:480px ){
+      .custom_review .swiper-button-next {
+        right: 20px;
+    }
+      .custom_review .swiper-button-prev{
+        left: 20px;
+    }
+        .custom_review .swiper-pagination-progressbar {
+        width: 100%;
+    
+        max-width: 200px;
+        margin: 0 auto;
+        }
+         .custom_review .card_wrapper {
+
+      margin-bottom: 30px;
+  }
+  section.custom_review {
+ 
+    padding: 60px 0px;
+}
+
+.custom_review h2.heading {
+    font-size: 36px;
+    line-height: 40px;
+            max-width: 300px;
+        margin: 0 auto;
+  }
+
+  .custom_review p.review_text {
+
+
+    font-size: 13.61px;
+    line-height: 22.69px;
+
+}
+.custom_review .star_rating_wrapper svg{
+  max-width: 95px;
+  width: 100%;
+}
+
+    
+  }
+ @media (max-width:430px ){
+      .custom_review .swiper-button-next {
+        right: -10px;
+    }
+        .custom_review .swiper-button-prev {
+        left: -10px;
+    }
+  }
+
+</style>
+
+<script>
+  var swiper = new Swiper('.custom_review .mySwiper', {
+    slidesPerView: 2,
+    spaceBetween: 40,
+   
+    freeMode: false,
+    loop: true,
+    pagination: {
+      el: '.swiper-pagination',
+      type: 'progressbar',
+    },
+    
+    breakpoints: {
+      0: {
+        slidesPerView: 1,
+        spaceBetween: 20,
+        
+      },
+      430: {
+        slidesPerView: 1,
+        spaceBetween: 20,
+         
+      },
+      768: {
+        slidesPerView: 2,
+        spaceBetween: 20,
+      },
+      1024: {
+        slidesPerView: 2,
+        spaceBetween: 20,
+      },
+      1240: {
+        slidesPerView: 2,
+        spaceBetween: 20,
+      },
+    },
+  });
+</script>
+{% schema %}
+{
+  "name": "Custom Review",
+  "settings": [
+    {
+      "type": "text",
+      "id": "review_text",
+      "label": "Text"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+     
+    },
+    {
+      "type": "text",
+      "id": "sub_text",
+      "label": "Text",
+     
+    }
+  ],
+  "blocks": [
+    {
+      "type": "Review_Card",
+      "name": "Review Card",
+      "settings": [
+        {
+        "type": "image_picker",
+        "id":"img_rew",
+        "label": "Select Image"
+        },
+        {
+          "type": "richtext",
+          "id": "text",
+          "label": "Review Text"
+        },
+        {
+          "type": "text",
+          "id": "text1",
+          "label": "Name",
+        
+        },
+        {
+          "type": "text",
+          "id": "varify",
+          "label": "Varify Text",
+        
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Custom Review"
+    }
+  ]
+}
+{% endschema %}
