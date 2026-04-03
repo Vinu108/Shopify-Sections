@@ -1,0 +1,768 @@
+<section class="custom_product_slider">
+  <div class="page-width">
+    <div class="wrapper">
+      {% if section.settings.heading != blank %}
+        <h2 class="heading">{{ section.settings.heading }}</h2>
+      {% endif %}
+      <div class="tab_wrapper">
+        {% for block in section.blocks %}
+          {% if block.settings.tab_1 != blank %}
+            <div
+              class="tab_btn {% if forloop.first %}active{% endif %}"
+              data-index="{{ forloop.index0 }}"
+            >
+              {{ block.settings.tab_1 }}
+            </div>
+          {% endif %}
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+
+  <div class="tab_content_item_wrapper">
+  {% for block in section.blocks %}
+    <div class="tab_content_item {% if forloop.first %}active{% endif %}" data-index="{{ forloop.index0 }}">
+
+      {% assign products_in_block = '' %}
+      {% for i in (1..8) %}
+        {% assign product_key = 'product_' | append: i %}
+        {% assign product = all_products[block.settings[product_key]] %}
+        {% if product != blank %}
+          {% assign products_in_block = products_in_block | append: product_key | append: ',' %}
+        {% endif %}
+      {% endfor %}
+
+      <div class="carousel-container">
+        <div class="carousel-track">
+          {% for i in (1..8) %}
+            {% assign product_key = 'product_' | append: i %}
+            {% assign image_key = 'image_' | append: i %}
+            {% assign product = all_products[block.settings[product_key]] %}
+            {% assign custom_image = block.settings[image_key] %}
+
+            {% if product != blank %}
+              <div class="carousel-slide" data-slide="{{ forloop.index0 }}">
+                <div class="slide-image-wrap">
+                  {% if custom_image != blank %}
+                    <img src="{{ custom_image | image_url: width: 600 }}" alt="{{ product.title }}" draggable="false">
+                  {% elsif product.featured_image %}
+                    <img src="{{ product.featured_image | image_url: width: 600 }}" alt="{{ product.title }}" draggable="false">
+                  {% endif %}
+                </div>
+              </div>
+            {% endif %}
+          {% endfor %}
+        </div>
+      </div>
+      
+
+      <div class="product-info-wrapper">
+        {% for i in (1..8) %}
+          {% assign product_key = 'product_' | append: i %}
+          {% assign product = all_products[block.settings[product_key]] %}
+          {% if product != blank %}
+            <div class="product-info-card {% if forloop.first %}active{% endif %}" data-slide="{{ forloop.index0 }}">
+              <div class="jdgm-widget jdgm-preview-badge" data-id="{{ product.id }}">
+                {{ product.metafields.judgeme.badge }}
+              </div>
+              <h3>{{ product.title }}</h3>
+              <div class="price_bedge_wrap">
+                <p class="main_price">{{ product.price | money }}</p>
+                {% if product.compare_at_price > product.price %}
+                  <p class="compare_price">{{ product.compare_at_price | money }}</p>
+                  {% assign discount = product.compare_at_price | minus: product.price %}
+                  {% assign discount_percent = discount | times: 100 | divided_by: product.compare_at_price %}
+                  <p class="save_price">SAVE {{ discount_percent }}%</p>
+                {% endif %}
+              </div>
+
+              {% if product.options_with_values.size > 0 %}
+                   {% unless product.has_only_default_variant %}
+                <div class="product-options">
+                  {% comment %} {% for option in product.options_with_values %}
+                    <div class="option-row">
+                      <span class="option-label">{{ option.name }}:</span>
+                      <div class="option-values">
+                        {% for value in option.values %}
+                          {% if option.name == 'Color' or option.name == 'Colour' %}
+                            <span class="color-swatch" style="background-color: {{ value | downcase | replace: ' ', '' }};" title="{{ value }}"></span>
+                          {% else %}
+                            <span class="option-pill">{{ value }}</span>
+                          {% endif %}
+                        {% endfor %}
+                      </div>
+                    </div>
+                  {% endfor %} {% endcomment %}
+                
+  {% for option in product.options_with_values %}
+    <div class="option-row">
+      <span class="option-label">{{ option.name }}:</span>
+      <div class="option-values">
+        {% for value in option.values %}
+          <span class="border" data_index="{{ forloop.index }}"></span><span class="option-pill">{{ value }}</span>
+        
+        {% endfor %}
+      </div>
+    </div>
+  {% endfor %}
+
+                </div>
+                {% endunless %}
+              {% endif %}
+
+              <a class="show_btn" href="{{ product.url }}">
+                View Product
+                <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 12 12" fill="none">
+                  <path d="M5.17843 0.26402C5.53276 -0.089026 6.10698 -0.0873457 6.46067 0.266341C7.87988 1.68555 9.45668 3.26234 10.8845 4.69017C11.3058 5.11147 11.3112 5.79248 10.8995 6.22318C9.38607 7.80645 7.88407 9.42542 6.35234 11.0014C5.94844 11.417 5.29637 11.4358 4.89181 11.0209C4.48008 10.5986 4.47775 9.91542 4.90064 9.5043C5.92146 8.51191 7.02289 7.51494 8.00487 6.54075C5.45782 6.54075 2.60675 6.54279 0.00709961 6.54069L-0.000139702 4.35756L8.00487 4.35756C7.09881 3.45153 6.19275 2.54548 5.18266 1.53538C4.83085 1.18357 4.82599 0.615189 5.17843 0.26402Z" fill="currentColor"/>
+                </svg>
+              </a>
+            </div>
+          {% endif %}
+        {% endfor %}
+      </div>
+
+    </div>
+  {% endfor %}
+      </div>
+</section>
+
+<style>
+section.custom_product_slider {
+  padding-top: 80px;
+  overflow: hidden;
+  background: #fff;
+}
+
+section.custom_product_slider h2.heading {
+  font-size: 44px;
+  line-height: 54px;
+  letter-spacing: 0;
+  text-align: center;
+  text-transform: capitalize;
+  color: rgba(18, 51, 72, 1);
+  margin: 0;
+}
+
+section.custom_product_slider .tab_wrapper {
+    width: 100%;
+    max-width: 471px;
+    gap: 20px;
+    border-radius: 30px;
+    padding: 10px;
+    border: 1px solid rgba(18, 51, 72, 1);
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    margin: 0 auto;
+}
+
+section.custom_product_slider .tab_wrapper .tab_btn {
+width: 100%;
+    border-radius: 20px;
+    padding: 10px;
+    border: 1px solid rgba(18, 51, 72, 1);
+    font-family: Inter;
+    font-weight: 600;
+    font-size: 16px;
+    line-height: 18px;
+    letter-spacing: 0;
+    text-align: center;
+    text-transform: uppercase;
+    color: rgba(18, 51, 72, 1);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+}
+
+section.custom_product_slider .tab_wrapper .tab_btn.active {
+  background: rgba(18, 51, 72, 1);
+  color: rgba(255, 255, 106, 1);
+}
+
+section.custom_product_slider .wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+
+}
+
+section.custom_product_slider .tab_content_item {
+  display: none;
+}
+
+section.custom_product_slider .tab_content_item.active {
+  display: block;
+}
+
+/* ── Carousel ── */
+section.custom_product_slider .carousel-container {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+  padding: 40px 0 50px;
+}
+
+section.custom_product_slider .carousel-track {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  min-height: 560px;
+  cursor: grab;
+  user-select: none;
+}
+
+section.custom_product_slider .carousel-track.dragging {
+  cursor: grabbing;
+}
+
+section.custom_product_slider .carousel-slide {
+  position: absolute;
+  user-select: none;
+  will-change: transform, opacity, bottom;
+}
+
+section.custom_product_slider .carousel-track:not(.dragging) .carousel-slide {
+  transition: transform 0.55s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+              opacity 0.55s ease,
+              bottom 0.55s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+section.custom_product_slider .carousel-slide .slide-image-wrap {
+  width: 470px;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+}
+
+section.custom_product_slider .carousel-slide .slide-image-wrap img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  display: block;
+  pointer-events: none;
+}
+
+/* ── Product Info ── */
+section.custom_product_slider .product-info-wrapper {
+     position: relative;
+    text-align: center;
+    {% comment %} min-height: 200px; {% endcomment %}
+    padding: 0 20px 0;
+}
+
+section.custom_product_slider .product-info-card {
+  display: none;
+  flex-direction: column;
+  align-items: center;
+  gap: 15px;
+  animation: cps_fadeUp 0.35s ease forwards;
+}
+
+section.custom_product_slider .product-info-card.active {
+  display: flex;
+}
+
+@keyframes cps_fadeUp {
+  from { opacity: 0; transform: translateY(12px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+section.custom_product_slider .product-info-card h3 {
+    font-family: Inter !important;
+    font-weight: 700 !important;
+    font-size: 26px;
+    line-height: 36px;
+    letter-spacing: 0;
+    color: rgba(25, 23, 23, 1);
+    margin: 0;
+}
+
+section.custom_product_slider .price_bedge_wrap {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+section.custom_product_slider .price_bedge_wrap .main_price {
+     font-family: Inter;
+    font-weight: 700;
+    font-size: 16px;
+    line-height: 16px;
+    letter-spacing: 0;
+    margin: 0;
+    color: rgba(25, 23, 23, 1);
+}
+
+section.custom_product_slider .price_bedge_wrap .compare_price {
+    font-family: Inter;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 14px;
+    letter-spacing: 0;
+    text-decoration: line-through;
+    color: rgba(114, 114, 114, 1);
+        margin: 0;
+}
+
+section.custom_product_slider .price_bedge_wrap .save_price {
+    border-radius: 14.63px;
+    padding-top: 3.51px;
+    padding-right: 4.68px;
+    padding-bottom: 3.51px;
+    padding-left: 4.68px;
+    background: rgba(255, 255, 106, 1);
+    font-family: Inter;
+    font-weight: 500;
+    font-size: 12px;
+    line-height: 16.7px;
+    letter-spacing: 0;
+    text-align: center;
+    text-transform: uppercase;
+    color: rgba(18, 51, 72, 1);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0;
+}
+
+section.custom_product_slider .product-options {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  align-items: center;
+}
+
+section.custom_product_slider .option-row {
+     display: flex;
+    align-items: start;
+    gap: 10px;
+    font-size: 14px;
+    color: rgba(18, 51, 72, 0.7);
+    {% comment %} flex-direction: column; {% endcomment %}
+}
+
+section.custom_product_slider .option-label {
+    font-family: Inter;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 14px;
+    letter-spacing: 0%;
+    vertical-align: middle;
+    color: rgba(0, 0, 0, 1);
+}
+
+section.custom_product_slider .option-values {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+}
+
+section.custom_product_slider .option-pill {
+    font-family: Inter;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 14px;
+    letter-spacing: 0;
+    text-transform: uppercase;
+    color: rgba(0, 0, 0, 1);
+}
+section.custom_product_slider span.border {
+    background: rgba(238, 238, 238, 1);
+    width: 1px;
+    height: 13px;
+    opacity: 1;
+}
+section.custom_product_slider span.border[data_index="1"] {
+    display: none;
+}
+
+section.custom_product_slider .product-info-card .show_btn {
+    width: 100%;
+    max-width: 321px;
+    gap: 16px;
+    opacity: 1;
+    border-radius: 25px;
+    padding: 15px;
+    background: rgba(18, 51, 72, 1);
+    font-family: Inter;
+    font-weight: 600;
+    font-size: 18px;
+    line-height: 20px;
+    letter-spacing: 0;
+    text-align: center;
+    text-transform: capitalize;
+    color: rgba(255, 255, 106, 1);
+    text-decoration: unset;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+section.custom_product_slider .product-info-card .show_btn:hover {
+  opacity: 0.85;
+  transform: translateY(-1px);
+}
+
+
+section.custom_product_slider .product-info-card .jdgm-star.jdgm--on:before {
+    font-family: 'JudgemeStar' !important;
+}
+section.custom_product_slider .product-info-card .jdgm-star.jdgm--half:before {
+    font-family: 'JudgemeStar' !important;
+}
+section.custom_product_slider .product-info-card .jdgm-preview-badge .jdgm-star {
+    color: rgba(254, 165, 0, 1);
+}
+section.custom_product_slider .product-info-card span.jdgm-prev-badge__text {
+    font-family: Inter;
+    font-weight: 400;
+    font-size: 12px;
+    line-height: 14.4px;
+    letter-spacing: 0;
+    color: rgba(0, 0, 0, 1);
+}
+/* ── Responsive ── */
+@media (max-width: 1280px) {
+section.custom_product_slider {
+    padding-top: 60px;
+}
+section.custom_product_slider h2.heading {
+    font-size: 34px;
+    line-height: 44px;
+}
+}
+@media (max-width: 1024px) {
+section.custom_product_slider .carousel-slide .slide-image-wrap {
+    width: 370px;
+}
+section.custom_product_slider .carousel-track {
+     min-height: 430px;
+}
+}
+@media (max-width: 768px) {
+  section.custom_product_slider h2.heading {
+          font-size: 24px;
+        line-height: 34px;
+}
+  section.custom_product_slider {
+    padding-top: 50px;
+}
+section.custom_product_slider .tab_wrapper {
+    max-width: 356px;
+    gap: 13px;
+    padding: 7px;
+}
+section.custom_product_slider .tab_wrapper .tab_btn {
+    font-size: 12px;
+}
+section.custom_product_slider .wrapper {
+    gap: 20px;
+}
+section.custom_product_slider .product-info-card h3 {
+
+    font-size: 22px;
+    line-height: 32px;
+}
+section.custom_product_slider .product-info-card .show_btn {
+    gap: 10px;
+    font-size: 16px;
+    padding: 12px 10px;
+    width: 100%;
+    max-width: 500px;
+}
+}
+@media (max-width: 500px) {
+    section.custom_product_slider .carousel-slide .slide-image-wrap {
+        width: 340px;
+    }
+        section.custom_product_slider .carousel-track {
+        min-height: 390px;
+    }
+  }
+
+</style>
+<script>
+(function () {
+
+  function getCfg() {
+    var vw = document.documentElement.clientWidth || window.innerWidth;
+    if (vw >= 1025) return {
+      TX:      [0,   380,  690,  890],
+      SCALE:   [1,   0.78, 0.58, 0.24],
+      ROT:     [0,   12,   14,   16],
+      BOT:     [0,  -10,  -20,  -30],
+      OPA:     [1,   1,    1,    1],
+      ZI:      [10,  7,    5,    3],
+      DRAG_PX: 380
+    };
+    if (vw >= 501) return {
+      TX:      [0,   240,  430,  560],
+      SCALE:   [1,   0.78, 0.58, 0.24],
+        ROT:     [0,   12,   14,   16],
+      BOT:     [0,   -8,  -16,  -22],
+      OPA:     [1,   1,    1,    1],
+      ZI:      [10,  7,    5,    3],
+      DRAG_PX: 240
+    };
+    return {
+      TX:      [0,   210,  335,  420],
+      SCALE:   [1,   0.75, 0.54, 0.22],
+       ROT:     [0,   12,   14,   16],
+      BOT:     [0,   -4,  -10,  -16],
+      OPA:     [1,   1,    1,    1],
+      ZI:      [10,  7,    5,    3],
+      DRAG_PX: 160
+    };
+  }
+
+  var MOMENTUM_DECAY = 0.88;
+  var SNAP_STRENGTH  = 0.18;
+
+  function lerp(a, b, t) { return a + (b - a) * Math.max(0, Math.min(1, t)); }
+  function clamp(v, lo, hi) { return Math.max(lo, Math.min(hi, v)); }
+
+  function interp(arr, absDiff) {
+    var i0   = Math.min(Math.floor(absDiff), arr.length - 1);
+    var i1   = Math.min(i0 + 1,              arr.length - 1);
+    var frac = absDiff - Math.floor(absDiff);
+    return lerp(arr[i0], arr[i1], frac);
+  }
+
+  function initCarousel(tabContent) {
+    var slides    = Array.from(tabContent.querySelectorAll('.carousel-slide'));
+    var infoCards = Array.from(tabContent.querySelectorAll('.product-info-card'));
+    var total     = slides.length;
+    if (total === 0) return;
+
+    var offset       = Math.min(3, total - 1);
+    var targetOffset = offset;
+    var velocity     = 0;
+    var activeIndex  = Math.round(offset);
+    var rafId        = null;
+    var animating    = false;
+
+    var isDragging      = false;
+    var dragStartX      = 0;
+    var dragStartOffset = 0;
+    var lastX           = 0;
+    var lastT           = 0;
+
+    var track = tabContent.querySelector('.carousel-track');
+
+    function applyLayout(off) {
+      var cfg = getCfg();
+      slides.forEach(function (slide, i) {
+        var diff    = i - off;
+        var absDiff = Math.abs(diff);
+        var sign    = diff >= 0 ? 1 : -1;
+
+        var tx      = interp(cfg.TX,    absDiff) * sign;
+        var scale   = interp(cfg.SCALE, absDiff);
+        var rotate  = interp(cfg.ROT,   absDiff) * sign;
+        var bottom  = interp(cfg.BOT,   absDiff);
+        var opacity = absDiff > cfg.TX.length - 0.5 ? 0 : interp(cfg.OPA, absDiff);
+        var z       = Math.round(interp(cfg.ZI, absDiff));
+
+        slide.style.transform     = 'translateX(' + tx + 'px) scale(' + scale + ') rotate(' + rotate + 'deg)';
+        slide.style.opacity       = opacity;
+        slide.style.zIndex        = z;
+        slide.style.bottom        = bottom + '%';
+        slide.style.pointerEvents = (absDiff < 0.55) ? 'auto' : 'none';
+      });
+    }
+
+    function syncCards() {
+      var nearest = clamp(Math.round(offset), 0, total - 1);
+      if (nearest === activeIndex) return;
+      activeIndex = nearest;
+      infoCards.forEach(function (card, i) {
+        card.classList.toggle('active', i === activeIndex);
+      });
+    }
+
+    function tick() {
+      if (isDragging) { rafId = null; animating = false; return; }
+
+      var nearest = clamp(Math.round(targetOffset), 0, total - 1);
+
+      targetOffset += velocity;
+      velocity     *= MOMENTUM_DECAY;
+
+      var dist = nearest - targetOffset;
+      targetOffset += dist * SNAP_STRENGTH;
+      offset = targetOffset;
+
+      applyLayout(offset);
+      syncCards();
+
+      if (Math.abs(dist) < 0.0003 && Math.abs(velocity) < 0.0003) {
+        offset = nearest;
+        targetOffset = nearest;
+        velocity = 0;
+        applyLayout(offset);
+        syncCards();
+        rafId = null;
+        animating = false;
+        return;
+      }
+
+      rafId = requestAnimationFrame(tick);
+    }
+
+    function startAnim() {
+      if (!animating) { animating = true; rafId = requestAnimationFrame(tick); }
+    }
+
+    function dragStart(clientX) {
+      if (rafId) { cancelAnimationFrame(rafId); rafId = null; animating = false; }
+      isDragging      = true;
+      dragStartX      = clientX;
+      dragStartOffset = offset;
+      lastX           = clientX;
+      lastT           = performance.now();
+      velocity        = 0;
+      track.classList.add('dragging');
+    }
+
+    function dragMove(clientX) {
+      if (!isDragging) return;
+      var cfg = getCfg();
+      var dx  = clientX - dragStartX;
+      offset  = clamp(dragStartOffset - dx / cfg.DRAG_PX, -0.3, total - 0.7);
+
+      var now = performance.now();
+      var dt  = Math.max(1, now - lastT);
+      velocity = -(clientX - lastX) / cfg.DRAG_PX / dt * 16;
+      lastX = clientX;
+      lastT = now;
+
+      applyLayout(offset);
+      syncCards();
+    }
+
+    function dragEnd() {
+      if (!isDragging) return;
+      isDragging = false;
+      track.classList.remove('dragging');
+      targetOffset = clamp(offset + velocity * 6, 0, total - 1);
+      startAnim();
+    }
+
+    window.addEventListener('resize', function () {
+      applyLayout(offset);
+    });
+
+    track.addEventListener('mousedown', function (e) { e.preventDefault(); dragStart(e.clientX); });
+    document.addEventListener('mousemove', function (e) { dragMove(e.clientX); });
+    document.addEventListener('mouseup',   function ()  { dragEnd(); });
+
+    track.addEventListener('touchstart', function (e) { dragStart(e.touches[0].clientX); }, { passive: true });
+    track.addEventListener('touchmove',  function (e) { dragMove(e.touches[0].clientX);  }, { passive: true });
+    track.addEventListener('touchend',   function ()  { dragEnd(); },                       { passive: true });
+
+    slides.forEach(function (slide, i) {
+      slide.addEventListener('click', function () {
+        if (Math.abs(velocity) > 0.01) return;
+        var diff = i - Math.round(offset);
+        if (diff !== 0) {
+          targetOffset = clamp(offset + diff, 0, total - 1);
+          velocity = 0;
+          startAnim();
+        }
+      });
+    });
+
+    applyLayout(offset);
+    syncCards();
+  }
+
+  function initTabs(section) {
+    var tabBtns     = section.querySelectorAll('.tab_btn');
+    var tabContents = section.querySelectorAll('.tab_content_item');
+    tabBtns.forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        var idx = btn.getAttribute('data-index');
+        tabBtns.forEach(function (b) { b.classList.remove('active'); });
+        btn.classList.add('active');
+        tabContents.forEach(function (c) { c.classList.remove('active'); });
+        var target = section.querySelector('.tab_content_item[data-index="' + idx + '"]');
+        if (target) target.classList.add('active');
+      });
+    });
+  }
+
+  function init() {
+    document.querySelectorAll('section.custom_product_slider').forEach(function (section) {
+      initTabs(section);
+      section.querySelectorAll('.tab_content_item').forEach(function (tab) {
+        initCarousel(tab);
+      });
+    });
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', init);
+  } else {
+    init();
+  }
+
+})();
+</script>
+
+
+{% schema %}
+{
+  "name": "Custom Product Slider",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Designed for the Journey"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "block",
+      "name": "Tab",
+      "limit": 3,
+      "settings": [
+        {
+          "type": "text",
+          "id": "tab_1",
+          "label": "Tab Label",
+          "default": "Best Sellers"
+        },
+        { "type": "product",      "id": "product_1", "label": "Product 1" },
+        { "type": "image_picker", "id": "image_1",   "label": "Custom Image 1" },
+        { "type": "product",      "id": "product_2", "label": "Product 2" },
+        { "type": "image_picker", "id": "image_2",   "label": "Custom Image 2" },
+        { "type": "product",      "id": "product_3", "label": "Product 3" },
+        { "type": "image_picker", "id": "image_3",   "label": "Custom Image 3" },
+        { "type": "product",      "id": "product_4", "label": "Product 4" },
+        { "type": "image_picker", "id": "image_4",   "label": "Custom Image 4" },
+        { "type": "product",      "id": "product_5", "label": "Product 5" },
+        { "type": "image_picker", "id": "image_5",   "label": "Custom Image 5" },
+        { "type": "product",      "id": "product_6", "label": "Product 6" },
+        { "type": "image_picker", "id": "image_6",   "label": "Custom Image 6" },
+        { "type": "product",      "id": "product_7", "label": "Product 7" },
+        { "type": "image_picker", "id": "image_7",   "label": "Custom Image 7" },
+        { "type": "product",      "id": "product_8", "label": "Product 8" },
+        { "type": "image_picker", "id": "image_8",   "label": "Custom Image 8" }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Custom Product Slider"
+    }
+  ]
+}
+{% endschema %}
