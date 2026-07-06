@@ -1,0 +1,287 @@
+{%- comment -%}
+  ================================================
+  Comparison Table Section — All-in-One File
+  Place this file in: Sections/compare-table.liquid
+  (No separate CSS or snippet files needed)
+  ================================================
+{%- endcomment -%}
+
+<style>
+  .compare-section-{{ section.id }} {
+    padding: 60px 20px;
+    background: {{ section.settings.bg_color }};
+  }
+
+  .compare-section-{{ section.id }} .compare-container {
+    max-width: 900px;
+    margin: 0 auto;
+  }
+
+  .compare-section-{{ section.id }} .compare-header {
+    text-align: center;
+    margin-bottom: 32px;
+  }
+
+  .compare-section-{{ section.id }} .compare-eyebrow {
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: #6b7280;
+    margin: 0 0 8px;
+  }
+
+  .compare-section-{{ section.id }} .compare-title {
+    font-size: 32px;
+    font-weight: 800;
+    color: #101828;
+    margin: 0 0 8px;
+  }
+
+  .compare-section-{{ section.id }} .compare-subtitle {
+    font-size: 14px;
+    color: #667085;
+    margin: 0;
+  }
+
+  .compare-section-{{ section.id }} .compare-table-wrapper {
+    overflow-x: auto;
+    border-radius: 12px;
+  }
+
+  .compare-section-{{ section.id }} .compare-table {
+    width: 100%;
+    border-collapse: collapse;
+    background: transparent;
+    min-width: 560px;
+  }
+
+  .compare-section-{{ section.id }} .compare-th {
+    padding: 18px 20px;
+    text-align: center;
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 0.03em;
+    color: #344054;
+  }
+
+  .compare-section-{{ section.id }} .compare-th--blank {
+    width: 26%;
+  }
+
+  .compare-section-{{ section.id }} .compare-th--brand {
+    background: #0b5fc7;
+    border-radius: 10px 10px 0 0;
+  }
+
+  .compare-section-{{ section.id }} .compare-brand-name {
+    color: #ffffff;
+    font-size: 20px;
+    font-weight: 800;
+    font-style: italic;
+    letter-spacing: 0.02em;
+  }
+
+  .compare-section-{{ section.id }} .compare-brand-logo {
+    display: inline-block;
+    height: auto;
+    max-height: 28px;
+    width: auto;
+  }
+
+  .compare-section-{{ section.id }} .compare-th--competitor {
+    color: #475467;
+  }
+
+  .compare-section-{{ section.id }} .compare-row {
+    border-bottom: 1px solid #e4e7ec;
+  }
+
+  .compare-section-{{ section.id }} .compare-row:last-child {
+    border-bottom: none;
+  }
+
+  .compare-section-{{ section.id }} .compare-td {
+    padding: 20px;
+    text-align: center;
+    vertical-align: middle;
+    font-size: 15px;
+    color: #101828;
+  }
+
+  .compare-section-{{ section.id }} .compare-td--label {
+    text-align: left;
+    font-weight: 600;
+    white-space: nowrap;
+  }
+
+  .compare-section-{{ section.id }} .compare-td--brand {
+    background: #0b5fc7;
+  }
+
+  .compare-section-{{ section.id }} .compare-row:last-child .compare-td--brand {
+    border-radius: 0 0 10px 10px;
+  }
+
+  .compare-section-{{ section.id }} .compare-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    color: #0b5fc7;
+  }
+
+  .compare-section-{{ section.id }} .compare-icon--on-brand {
+    color: #ffffff;
+  }
+
+  @media (max-width: 640px) {
+    .compare-section-{{ section.id }} .compare-title {
+      font-size: 24px;
+    }
+    .compare-section-{{ section.id }} .compare-th,
+    .compare-section-{{ section.id }} .compare-td {
+      padding: 14px 12px;
+      font-size: 13px;
+    }
+  }
+</style>
+
+<section class="compare-section-{{ section.id }}">
+  <div class="compare-container">
+    <div class="compare-header">
+      <p class="compare-eyebrow">{{ section.settings.eyebrow | default: 'Compare' }}</p>
+      <h2 class="compare-title">{{ section.settings.title | default: 'Why Choose Us?' }}</h2>
+      {%- if section.settings.subtitle != blank -%}
+        <p class="compare-subtitle">{{ section.settings.subtitle }}</p>
+      {%- endif -%}
+    </div>
+
+    <div class="compare-table-wrapper">
+      <table class="compare-table">
+        <thead>
+          <tr>
+            <th class="compare-th compare-th--blank"></th>
+            <th class="compare-th compare-th--brand">
+              {%- if section.settings.brand_logo != blank -%}
+                <img src="{{ section.settings.brand_logo | image_url: width: 300 }}" alt="{{ section.settings.brand_name }}" class="compare-brand-logo" loading="lazy" width="140">
+              {%- else -%}
+                <span class="compare-brand-name">{{ section.settings.brand_name | default: 'BRAND' }}</span>
+              {%- endif -%}
+            </th>
+            {%- if section.settings.competitor_1_name != blank -%}
+              <th class="compare-th compare-th--competitor">{{ section.settings.competitor_1_name }}</th>
+            {%- endif -%}
+            {%- if section.settings.competitor_2_name != blank -%}
+              <th class="compare-th compare-th--competitor">{{ section.settings.competitor_2_name }}</th>
+            {%- endif -%}
+          </tr>
+        </thead>
+        <tbody>
+          {%- for block in section.blocks -%}
+            {%- if block.type == 'row' -%}
+              <tr class="compare-row" {{ block.shopify_attributes }}>
+                <td class="compare-td compare-td--label">{{ block.settings.feature }}</td>
+
+                <td class="compare-td compare-td--brand">
+                  {%- if block.settings.brand_value -%}
+                    <span class="compare-icon compare-icon--check compare-icon--on-brand">
+                      <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <circle cx="9" cy="9" r="9" fill="currentColor"/>
+                        <path d="M5.5 9.2L7.7 11.4L12.5 6.5" stroke="#0d5bb5" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+                      </svg>
+                    </span>
+                  {%- else -%}
+                    <span class="compare-icon compare-icon--cross">
+                      <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <circle cx="9" cy="9" r="8.25" stroke="#c7c7c7" stroke-width="1.2"/>
+                        <path d="M6.2 6.2L11.8 11.8M11.8 6.2L6.2 11.8" stroke="#c7c7c7" stroke-width="1.2" stroke-linecap="round"/>
+                      </svg>
+                    </span>
+                  {%- endif -%}
+                </td>
+
+                <td class="compare-td">
+                  {%- if block.settings.competitor_1_value -%}
+                    <span class="compare-icon compare-icon--check">
+                      <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <circle cx="9" cy="9" r="9" fill="currentColor"/>
+                        <path d="M5.5 9.2L7.7 11.4L12.5 6.5" stroke="#ffffff" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+                      </svg>
+                    </span>
+                  {%- else -%}
+                    <span class="compare-icon compare-icon--cross">
+                      <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <circle cx="9" cy="9" r="8.25" stroke="#c7c7c7" stroke-width="1.2"/>
+                        <path d="M6.2 6.2L11.8 11.8M11.8 6.2L6.2 11.8" stroke="#c7c7c7" stroke-width="1.2" stroke-linecap="round"/>
+                      </svg>
+                    </span>
+                  {%- endif -%}
+                </td>
+
+                <td class="compare-td">
+                  {%- if block.settings.competitor_2_value -%}
+                    <span class="compare-icon compare-icon--check">
+                      <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <circle cx="9" cy="9" r="9" fill="currentColor"/>
+                        <path d="M5.5 9.2L7.7 11.4L12.5 6.5" stroke="#ffffff" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+                      </svg>
+                    </span>
+                  {%- else -%}
+                    <span class="compare-icon compare-icon--cross">
+                      <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <circle cx="9" cy="9" r="8.25" stroke="#c7c7c7" stroke-width="1.2"/>
+                        <path d="M6.2 6.2L11.8 11.8M11.8 6.2L6.2 11.8" stroke="#c7c7c7" stroke-width="1.2" stroke-linecap="round"/>
+                      </svg>
+                    </span>
+                  {%- endif -%}
+                </td>
+              </tr>
+            {%- endif -%}
+          {%- endfor -%}
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Comparison Table",
+  "settings": [
+    { "type": "color", "id": "bg_color", "label": "Background color", "default": "#eef4fc" },
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow text", "default": "Compare" },
+    { "type": "text", "id": "title", "label": "Title", "default": "Why Choose FuelRyte?" },
+    { "type": "text", "id": "subtitle", "label": "Subtitle", "default": "See how FuelRyte compares to traditional energy drinks and coffee." },
+    { "type": "text", "id": "brand_name", "label": "Brand name (if no logo)", "default": "FUELRYTE" },
+    { "type": "image_picker", "id": "brand_logo", "label": "Brand logo (optional)" },
+    { "type": "text", "id": "competitor_1_name", "label": "Competitor 1 name", "default": "Energy Drinks" },
+    { "type": "text", "id": "competitor_2_name", "label": "Competitor 2 name", "default": "Coffee" }
+  ],
+  "blocks": [
+    {
+      "type": "row",
+      "name": "Feature Row",
+      "settings": [
+        { "type": "text", "id": "feature", "label": "Feature name", "default": "Fast-Acting Energy" },
+        { "type": "checkbox", "id": "brand_value", "label": "Your brand has this?", "default": true },
+        { "type": "checkbox", "id": "competitor_1_value", "label": "Competitor 1 has this?", "default": false },
+        { "type": "checkbox", "id": "competitor_2_value", "label": "Competitor 2 has this?", "default": false }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Comparison Table",
+      "blocks": [
+        { "type": "row", "settings": { "feature": "Fast-Acting Energy", "brand_value": true, "competitor_1_value": true, "competitor_2_value": true } },
+        { "type": "row", "settings": { "feature": "Natural Ingredients", "brand_value": true, "competitor_1_value": false, "competitor_2_value": true } },
+        { "type": "row", "settings": { "feature": "No Sugar Crash", "brand_value": true, "competitor_1_value": false, "competitor_2_value": true } },
+        { "type": "row", "settings": { "feature": "Convenient On-The-Go", "brand_value": true, "competitor_1_value": false, "competitor_2_value": false } },
+        { "type": "row", "settings": { "feature": "Great-Tasting Flavors", "brand_value": true, "competitor_1_value": true, "competitor_2_value": false } },
+        { "type": "row", "settings": { "feature": "Pocket-Sized Bottle", "brand_value": true, "competitor_1_value": false, "competitor_2_value": false } },
+        { "type": "row", "settings": { "feature": "Supports Focus", "brand_value": true, "competitor_1_value": false, "competitor_2_value": false } }
+      ]
+    }
+  ]
+}
+{% endschema %}
