@@ -1,0 +1,858 @@
+<section class="best_sellling_rings">
+  <div class="container">
+    <div class="heading_tab_wrap">
+      <div class="heading_wrap">
+        {% if section.settings.heading != blank %}
+          <h2 class="section_heading">{{ section.settings.heading }}</h2>
+        {% endif %}
+
+        <p class="sub_heading">{{ section.settings.sub_heading }}</p>
+      </div>
+      <!-- Tabs -->
+      <div class="tabs">
+        {% for block in section.blocks %}
+          <button
+            class="tab_btn {% if forloop.first %}active{% endif %}"
+            data-tab="tab-{{ forloop.index }}"
+          >
+            {{ block.settings.tab_name }}
+          </button>
+        {% endfor %}
+      </div>
+    </div>
+    <!-- Tab Content -->
+    <div class="tabs_content">
+      {% for block in section.blocks %}
+        <div
+          class="tab_content {% if forloop.first %}active{% endif %}"
+          id="tab-{{ forloop.index }}"
+        >
+          <div class="product_gr_wrap">
+            <div class="swiper product-slider">
+              <div class="swiper-wrapper">
+                {% for product in block.settings.collection.products limit: 8 %}
+                  <div class="product_card swiper-slide">
+                    <wishlist-button-collection
+  data-product-handle="{{ product.handle }}"
+  show-icon
+  icon="wishlist"
+class="favourite_icon">
+</wishlist-button-collection>
+                    <a href="{{ product.url }}">
+                      <div class="product_img">
+                        {%- assign featured_image = product.featured_image -%}
+                        <img
+                          src="{{ featured_image | image_url: width: 360, format: 'webp' }}"
+                          srcset="
+                            {{ featured_image | image_url: width: 165, format: 'webp' }} 165w,
+                            {{ featured_image | image_url: width: 240, format: 'webp' }} 240w,
+                            {{ featured_image | image_url: width: 360, format: 'webp' }} 360w,
+                            {{ featured_image | image_url: width: 533, format: 'webp' }} 533w,
+                            {{ featured_image | image_url: width: 720, format: 'webp' }} 720w
+                          "
+                          sizes="
+                            (max-width: 500px) 50vw,
+                            (max-width: 1024px) 33vw,
+                            25vw
+                          "
+                          alt="{{ featured_image.alt | escape | default: product.title | escape }}"
+                          width="{{ featured_image.width }}"
+                          height="{{ featured_image.height }}"
+                          loading="lazy"
+                          fetchpriority="low"
+                          decoding="async"
+                          class="product-image"
+                        />
+                        <div class="badge">
+                          <span>BEST SELLER</span>
+                          <span class="badge_off">10% OFF</span>
+                        </div>
+
+                        {% comment %} <div class="favourite_icon">
+                           <svg width="20px" height="20px" viewBox="0 0 24 24" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns="http://www.w3.org/2000/svg" version="1.1" xmlns:cc="http://creativecommons.org/ns#" xmlns:dc="http://purl.org/dc/elements/1.1/">
+ <g transform="translate(0 -1028.4)">
+  <path d="m7 1031.4c-1.5355 0-3.0784 0.5-4.25 1.7-2.3431 2.4-2.2788 6.1 0 8.5l9.25 9.8 9.25-9.8c2.279-2.4 2.343-6.1 0-8.5-2.343-2.3-6.157-2.3-8.5 0l-0.75 0.8-0.75-0.8c-1.172-1.2-2.7145-1.7-4.25-1.7z" fill="#e74c3c"/>
+ </g>
+</svg>
+                          </div> {% endcomment %}
+
+                          
+                      </div>
+
+                      <div class="product_info">
+                        <div class="product_top">
+                          <div class="jdgm-widget jdgm-preview-badge" data-id="{{ product.id }}">
+                            {{ product.metafields.judgeme.badge }}
+                          </div>
+                          <a href="{{ product.url }}">
+                            <h4 class="clamp-2">{{ product.title }}</h4>
+                          </a>
+
+                          <div class="price">
+                            <span class="main_p">{{ product.price | money }}</span>
+                            {% if product.compare_at_price > product.price %}
+                              <span class="compare">{{ product.compare_at_price | money }}</span>
+                            {% endif %}
+                          </div>
+                        </div>
+                        
+                      </div>
+                    </a>
+                  </div>
+                {% endfor %}
+              </div>
+              <div class="pagination_btns">
+                <div class="swiper-pagination"></div>
+
+                <div class="btns_wrap">
+                  <div class="left_btn">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 30 30" fill="none">
+                      <rect width="29.0918" height="29.0918" rx="14.5459" fill="#0D1B3E"/>
+                      <path d="M21.0538 13.6352H11.1913L14.9266 9.21501L13.5387 8.03847L8.03906 14.5458L13.5387 21.0532L14.9266 19.8767L11.1913 15.4565H21.0538V13.6352Z" fill="white"/>
+                    </svg>
+                  </div>
+                  <div class="right_btn">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 30 30" fill="none">
+                      <rect width="29.0918" height="29.0918" rx="14.5459" transform="matrix(-1 0 0 1 29.0898 0)" fill="#0D1B3E"/>
+                      <path d="M8.03603 13.6352H17.8985L14.1632 9.21501L15.5511 8.03847L21.0508 14.5458L15.5511 21.0532L14.1632 19.8767L17.8985 15.4565H8.03603V13.6352Z" fill="white"/>
+                    </svg>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          {% if block.settings.button_text != blank %}
+           <div class="btn_wrapper">
+                      <a href="{{ block.settings.button_link }}" class="view_btn">
+                           {{ block.settings.button_text }}                        
+                            <svg
+                              xmlns="http://www.w3.org/2000/svg"
+                              width="12"
+                              height="12"
+                              viewBox="0 0 12 12"
+                              fill="none"
+                            >
+                              <path d="M0.291684 9.89942L8.19007 2.00104H1.2887C0.737161 2.00104 0.284613 1.54849 0.284613 0.996946C0.284479 0.865977 0.310175 0.736269 0.360233 0.615244C0.41029 0.494219 0.483725 0.384256 0.576334 0.291647C0.668943 0.199038 0.778907 0.125603 0.899931 0.0755459C1.02096 0.0254886 1.15066 -0.000208704 1.28163 -7.43611e-05H10.6013C10.7323 -0.000208704 10.862 0.0254886 10.983 0.0755459C11.104 0.125603 11.214 0.199038 11.3066 0.291647C11.3992 0.384255 11.4726 0.494219 11.5227 0.615244C11.5728 0.736269 11.5985 0.865978 11.5983 0.996946V10.3166C11.5983 10.4475 11.5725 10.5772 11.5224 10.6982C11.4723 10.8191 11.3989 10.929 11.3063 11.0216C11.2137 11.1142 11.1038 11.1876 10.9828 11.2377C10.8619 11.2878 10.7322 11.3136 10.6013 11.3136C10.4704 11.3136 10.3407 11.2878 10.2198 11.2377C10.0988 11.1876 9.98888 11.1142 9.8963 11.0216C9.80372 10.929 9.73028 10.8191 9.68017 10.6982C9.63007 10.5772 9.60428 10.4475 9.60428 10.3166L9.60428 3.41525L1.7059 11.3136C1.31699 11.7025 0.680593 11.7025 0.291684 11.3136C-0.0972248 10.9247 -0.0972248 10.2883 0.291684 9.89942Z" fill="white"/>
+                            </svg>
+                          </a>
+                        </div>
+                      {% endif %}
+        </div>
+      {% endfor %}
+    </div>
+   
+  </div>
+</section>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    document.querySelectorAll('.product-slider').forEach(function (slider) {
+      new Swiper(slider, {
+        slidesPerView: 4,
+        spaceBetween: 20,
+        loop: false,
+
+        navigation: {
+          nextEl: slider.querySelector('.right_btn'),
+          prevEl: slider.querySelector('.left_btn'),
+        },
+
+        pagination: {
+          el: slider.querySelector('.swiper-pagination'),
+          type: 'progressbar',
+        },
+
+        breakpoints: {
+          0: { slidesPerView: 1.2 },
+          480: { slidesPerView: 2 },
+          768: { slidesPerView: 3 },
+          1024: { slidesPerView: 4 },
+        },
+      });
+    });
+  });
+</script>
+
+<style>
+          .best_sellling_rings .jdgm-star.jdgm--on:before {
+          font-family: 'JudgemeStar' !important;
+      }
+      .best_sellling_rings .jdgm-star.jdgm--half:before {
+          font-family: 'JudgemeStar' !important;
+      }
+      .best_sellling_rings {
+             padding: 80px 0;
+        background: #E9ECF7;
+      }
+
+
+      .best_sellling_rings .section_heading {
+
+          margin: 0;
+
+
+          font-family: Instrument Sans;
+    font-weight: 500;
+    font-size: 55px;
+    line-height: 50px;
+    letter-spacing: 0px;
+    color: #0D1B3E;
+    margin-bottom: 20px;
+
+      }
+
+      .best_sellling_rings p.sub_heading {
+        font-family: Instrument Sans;
+        font-weight: 400;
+        font-size: 16px;
+        line-height: 22px;
+        letter-spacing: 0%;
+        color: #000;
+    }
+
+      .best_sellling_rings .heading_tab_wrap {
+          display: grid;
+          grid-template-columns: 1fr auto;
+          align-items: flex-end;
+          justify-content: space-between;
+          gap: 20px;
+              margin-bottom: 50px;
+      }
+      /* Tabs */
+      .best_sellling_rings .tabs {
+           display: grid;
+          grid-template-columns: auto auto auto;
+          gap: 0 50px;
+          width: 100%;
+          margin-left: auto;
+            position: relative;
+
+      }
+
+      .best_sellling_rings .tabs:after{
+      content: '';
+      display: block;
+      height: 5px;
+      background: #DEE5FF;
+      width: 100%;
+      border-radius: 5px;
+      position: absolute;
+        bottom: 0px;
+        transition: all 0.3s ease;
+    }
+
+      .best_sellling_rings .tab_btn {
+          background: transparent;
+          transition: 0.3s;
+         font-family: Instrument Sans;
+    font-weight: 400;
+    font-size: 26px;
+    line-height: 26px;
+    letter-spacing: 0%;
+    text-transform: uppercase;
+    padding-bottom: 30px;
+              color: #000;
+      }
+
+      .best_sellling_rings .tab_btn.active {
+          color: #0D1B3E;
+        position: relative;
+        font-weight: 700;
+      }
+
+      .best_sellling_rings .tab_btn.active:after{
+     content: '';
+      display: block;
+      height: 5px;
+      background: #0D1B3E;
+      width: 100%;
+      border-radius: 5px;
+      position: absolute;
+          z-index: 1;
+        bottom: 0px;
+  transition: all 0.3s ease;
+    }
+
+      /* Tab Content */
+      .best_sellling_rings .tab_content {
+        display: none;
+      }
+
+      .best_sellling_rings .tab_content.active {
+        display: block;
+      }
+
+
+       .best_sellling_rings .tab_content[id="tab-3"] .set_variants{
+         display: block !important;
+      }
+
+      /* Grid */
+      .best_sellling_rings .products_grid {
+          display: grid;
+          grid-template-columns: repeat(4, 1fr);
+          row-gap: 40px;
+          column-gap: 29px;
+      }
+
+      /* Card */
+      .best_sellling_rings .product_card {
+          text-align: center;
+          position: relative;
+              display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+      }
+      .best_sellling_rings .product_card .product_info {
+          display: flex;
+          flex-direction: column;
+          gap: 10px;
+          justify-content: start;
+          align-items: start;
+          padding-top: 16px;
+      
+          justify-content: space-between;
+      }
+         .best_sellling_rings .product_card .set_variants{
+         display: none;
+        }
+
+      .best_sellling_rings .product_card .product_info .product_top{
+          display: flex;
+          flex-direction: column;
+          gap: 10px;
+          justify-content: start;
+          align-items: start;
+      }
+      .best_sellling_rings .jdgm-preview-badge .jdgm-star {
+          color: rgba(254, 165, 0, 1);
+      }
+      .best_sellling_rings .jdgm-prev-badge__text {
+
+          color: #000000;
+        font-weight: 400;
+        font-size: 12px;
+        line-height: 14.4px;
+        letter-spacing: 0%;
+      }
+      .best_sellling_rings .product_img {
+       position: relative;
+          font-size: 0;
+
+          border-radius: 5px;
+          overflow: hidden;
+      }
+
+      .best_sellling_rings .product_img img {
+           width: 100%;
+          aspect-ratio: 1 / 1;
+          object-fit: cover;
+      }
+
+      .best_sellling_rings .badge {
+       position: absolute;
+        top: 20px;
+        left: 20px;
+       display: flex;
+       gap: 10px;
+       align-items: center;
+    }
+
+      .best_sellling_rings .badge span {
+          background: #0D1B3E;
+        border-radius: 3px;
+
+    font-weight: 500;
+
+    font-size: 12px;
+    line-height: 10px;
+    letter-spacing: 0%;
+    text-align: center;
+
+        border: unset;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        color: #fff;
+        padding: 7px;
+    }
+.best_sellling_rings .favourite_icon {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    display: flex;
+    gap: 10px;
+    align-items: center;
+        z-index: 1;
+} 
+     .best_sellling_rings .badge span.badge_off{
+       background: #fff;
+       color: #000000;
+       display:none;
+    }
+
+      .best_sellling_rings .product_info a{
+        text-decoration: none;
+      }
+
+      .best_sellling_rings .product_info h4.clamp-2 {
+          margin: 0;
+          font-family: Instrument Sans;
+    font-weight: 600;
+    font-size: 22px;
+    line-height: 30px;
+    letter-spacing: 0%;
+    color: #000000;
+    margin: 5px 0 0;
+    text-align: left;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+
+      }
+
+
+       .best_sellling_rings .price {
+       display: flex;
+          gap: 10px;
+          align-items: center;
+          justify-content: start;
+          flex-wrap: wrap;
+             margin: 5px 0 10px;
+              width: 100%;
+
+
+      }
+
+      .best_sellling_rings .price .main_p{
+     color: #000;
+        margin: 0;
+        font-family: Instrument Sans;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 16px;
+  letter-spacing: 0%;
+
+
+
+      }
+
+      .best_sellling_rings .compare {
+          font-family: Inter;
+          font-weight: 400;
+          font-size: 14px;
+          line-height: 14px;
+          letter-spacing: 0;
+          text-decoration: line-through;
+          color: rgba(114, 114, 114, 1);
+      }
+      .best_sellling_rings .btn_wrapper {
+          width: 100%;
+    max-width: 300px;
+    margin: 30px auto 0;
+      }
+
+      .best_sellling_rings .view_btn {
+            width: 100%;
+          opacity: 1;
+          padding: 21px;
+          border-radius: 5px;
+          background: #0D1B3E;
+
+          font-weight: 600;
+          font-size: 18px;
+          line-height: 20px;
+          letter-spacing: 0;
+          text-align: center;
+          text-transform: capitalize;
+          color: #fff;
+          text-decoration: unset;
+          display: flex;
+          gap: 10px;
+          justify-content: center;
+          align-items: center;
+
+      }
+      .best_sellling_rings .tab_content .bottom_btn {
+          display: flex;
+          width: 100%;
+          max-width: 321px;
+          opacity: 1;
+          gap: 16px;
+          padding: 15px;
+          border-radius: 25px;
+          background: transparent;
+          border: 1px solid rgba(18, 51, 72, 1);
+          font-weight: 600;
+          font-size: 18px;
+          line-height: 20px;
+          letter-spacing: 0;
+          text-align: center;
+          text-transform: capitalize;
+          color: rgba(18, 51, 72, 1);
+          align-items: center;
+          justify-content: center;
+          margin: 40px auto 0;
+
+          text-decoration: unset;
+      }
+
+
+      .best_sellling_rings .swiper-wrapper {
+
+      padding-bottom: 50px;
+  }
+
+      .best_sellling_rings .swiper-pagination {
+      position: unset;
+         max-width: 140px;
+      margin: 0 auto;
+      height: 4px;
+      background: #D7DFFF;
+      border-radius: 3px;
+
+  }
+
+   .best_sellling_rings span.swiper-pagination-progressbar-fill {
+      background: #0D1B3E !important;
+  }
+
+
+  .best_sellling_rings .btns_wrap {
+      display: none;
+  }
+  .left_btn[aria-disabled="true"],
+  .right_btn[aria-disabled="true"]{
+    opacity: 0.5;
+
+  }
+      @media screen and (max-width: 1500px) {
+  .best_sellling_rings .tab_btn {
+       font-size: 22px;
+      line-height: 26px;
+      padding-bottom: 20px;
+  }
+
+  }
+      @media screen and (max-width: 1300px) {
+      .best_sellling_rings{
+          padding: 60px 0;
+      }
+      .best_sellling_rings .section_heading{
+              font-size: 40px;
+              line-height: 100%;
+      }
+      .best_sellling_rings .view_btn {
+
+      padding: 13px 21px;
+      }
+      .best_sellling_rings .tabs {
+          max-width: 600px;
+      }
+
+      .best_sellling_rings .product_info h4.clamp-2 {
+
+      font-size: 19px;
+      line-height: 23px;
+      }
+      }
+     
+      @media screen and (max-width: 1024px) {
+            
+      .best_sellling_rings .products_grid {
+          grid-template-columns: repeat(2, 1fr);
+          row-gap: 30px;
+          column-gap: 19px;
+      }
+      .best_sellling_rings .tab_btn {
+          font-size: 14px;
+      }
+      .best_sellling_rings .tabs {
+            gap: 10px;
+      }
+      }
+
+      @media screen and (max-width: 990px) {
+        .best_sellling_rings .heading_tab_wrap {
+          grid-template-columns: 1fr;
+          margin-bottom: 20px;
+      }
+
+
+
+              .best_sellling_rings .tabs {
+              margin: 0 auto;
+          }
+
+      }
+
+
+      @media screen and (max-width: 840px) {
+
+
+
+
+      .best_sellling_rings .tabs {
+              gap: 10px;
+              margin: 0 auto;
+              max-width: 100%;
+          }
+          .best_sellling_rings .badge {
+          position: absolute;
+          top: 15px;
+          left: 15px;
+          font-size: 10px;
+              padding: 2px 6px;
+          }
+          .best_sellling_rings .view_btn {
+          gap: 10px;
+          font-size: 16px;
+          padding: 12px 10px;
+          width: 100%;
+          max-width: 100%;
+      }
+      }
+      @media screen and (max-width: 790px) {
+
+
+              .best_sellling_rings .tab_btn {
+              font-size: 12px;
+              padding: 8px 2px;
+          }
+      .best_sellling_rings .section_heading{
+              font-size: 35px;
+              line-height: 100%;
+
+      }
+      .best_sellling_rings .tab_content .bottom_btn {
+          gap: 10px;
+          font-size: 16px;
+          padding: 12px 10px;
+          width: 100%;
+          max-width: 100%;
+              margin: 20px auto 0;
+      }
+      .best_sellling_rings .swiper-wrapper {
+    padding-bottom: 30px;
+}
+      }
+      @media screen and (max-width: 500px) {
+          .best_sellling_rings .products_grid {
+              {% comment %} grid-template-columns: repeat(1, 1fr); {% endcomment %}
+              row-gap: 25px;
+              column-gap: 15px;
+          }
+
+  .best_sellling_rings .pagination_btns {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+  }
+  .best_sellling_rings .tab_btn.active:after,
+  .best_sellling_rings .tabs:after{
+
+    height: 3px;
+  }
+
+  .best_sellling_rings .tab_btn{
+
+    font-size: 16px;
+    padding: 4px 2px;
+  }
+
+  .best_sellling_rings .btns_wrap {
+      display: flex;
+      gap: 10px;
+  }
+
+
+      .best_sellling_rings .heading_tab_wrap {
+
+          margin-bottom: 30px;
+      }
+
+      .best_sellling_rings .section_heading {
+          font-size: 28px;
+          line-height: 100%;
+      }
+      .best_sellling_rings {
+          padding: 40px 0;
+      }
+          /*Added new css*/
+          .best_sellling_rings .product_info h4 {
+
+          font-size: 16px;
+          line-height: 23px;
+          margin: 0;
+          display: -webkit-box;
+              -webkit-line-clamp: 1;
+              -webkit-box-orient: vertical;
+              overflow: hidden;
+          }
+          .best_sellling_rings .badge {
+              position: absolute;
+              top: 10px;
+              left: 10px;
+          }
+
+          .best_sellling_rings .price {
+
+          font-size: 13px;
+          }
+          .best_sellling_rings .compare {
+
+          font-size: 11px;
+          }
+              .best_sellling_rings .view_btn {
+              gap: 10px;
+              font-size: 12px;
+              }
+                 .best_sellling_rings .product_card .product_info {
+            
+              gap: 10px;
+              justify-content: space-between;
+          }
+           .best_sellling_rings .jdgm-star {
+
+          font-size: 11px;
+          }
+              .best_sellling_rings .product_info h4.clamp-2 {
+
+      font-size: 18px;
+  margin: 0;
+      }
+  .best_sellling_rings .product_card .product_info {
+
+      padding-top: 10px;
+  }
+  .best_sellling_rings .price .main_p {
+
+      font-size: 14px;
+  }
+
+  .best_sellling_rings .swiper-pagination{
+
+        margin: 0;
+  }
+  .best_sellling_rings .btns_wrap {
+      display: flex;
+  }
+  .best_sellling_rings .swiper-wrapper {
+        padding-bottom: 20px;
+    }
+        }
+    @media (max-width: 427px){
+
+      .best_sellling_rings .tab_btn {
+          font-size: 12px;
+          padding: 4px 2px;
+      }
+      }
+
+        @media (max-width: 390px){
+           .best_sellling_rings .products_grid {
+
+              column-gap: 15px;
+          }
+
+              .best_sellling_rings .view_btn {
+              gap: 10px;
+              font-size: 15px;
+              padding: 9px 10px;b
+              }
+              .best_sellling_rings .view_btn svg{
+                width: 10px;
+              }
+              .best_sellling_rings .price {
+
+          gap: 5px;
+              }
+          .best_sellling_rings .compare {
+              font-size: 10px;
+          }
+        }
+</style>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    document.querySelectorAll('.best_sellling_rings').forEach(function (root) {
+      root.querySelectorAll('.tab_btn').forEach(function (btn) {
+        btn.addEventListener('click', function () {
+          var tabId = btn.getAttribute('data-tab');
+
+          root.querySelectorAll('.tab_btn').forEach(function (b) { b.classList.remove('active'); });
+          btn.classList.add('active');
+
+          root.querySelectorAll('.tab_content').forEach(function (c) { c.classList.remove('active'); });
+
+          var panel = root.querySelector('#' + tabId) || document.getElementById(tabId);
+          if (!panel) return;
+          panel.classList.add('active');
+
+          if (tabId === 'tab-3') {
+            panel.querySelectorAll('.product_card').forEach(function (card) {
+              var firstLabel = card.querySelector('.options_with_value label');
+              if (firstLabel) firstLabel.click();
+            });
+          }
+        });
+      });
+    });
+  });
+</script>
+
+{% schema %}
+{
+  "name": "Custom Collection Tabs",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Thoughtful By Design"
+    },
+    {
+      "type": "text",
+      "id": "sub_heading",
+      "label": "Sub Heading",
+      "default": "Where style meets everyday durability"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "tab",
+      "name": "Tab",
+      "settings": [
+        {
+          "type": "text",
+          "id": "tab_name",
+          "label": "Tab Name",
+          "default": "Cabin Bags"
+        },
+        {
+          "type": "collection",
+          "id": "collection",
+          "label": "Select Collection"
+        },
+        {
+  "type": "text",
+  "id": "button_text",
+  "label": "Button Text",
+  "default": "Best Couples Rings"
+},
+{
+  "type": "url",
+  "id": "button_link",
+  "label": "Button Link"
+}
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Best Selling Rings"
+    }
+  ]
+}
+{% endschema %}
