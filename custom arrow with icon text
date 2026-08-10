@@ -1,0 +1,507 @@
+
+
+{% style %}
+  /* =======================================
+     GLOBAL FULL BLEED CONTAINER WRAPPER
+     ======================================= */
+  .why-love-it-section-{{ section.id }} {
+    /* Shared Fluid Typography Variables (Consistent with PDP typography scale) */
+    --pdp-title-size: clamp(22px, 3.5vw + 1rem, 50px);
+    --pdp-title-lh: clamp(28px, 4vw + 1rem, 60px);
+
+    --pdp-subheading-size: clamp(14px, 0.4vw + 0.85rem, 16px);
+    --pdp-subheading-lh: clamp(22px, 0.6vw + 1.2rem, 28px);
+
+    --pdp-list-text-size: clamp(14px, 1.2vw + 0.6rem, 28px);
+
+    background-color: {{ section.settings.bg_color }};
+    /* width: 100vw;
+    position: relative;
+    left: 50%;
+    right: 50%;
+    margin-left: -50vw;
+    margin-right: -50vw;
+    overflow: hidden; */
+  }
+
+  .why-love-it__container {
+    width: 100%;
+    max-width: 1920px; /* Constrains left and right sides on large screens */
+    margin: 0 auto;
+    box-sizing: border-box;
+  }
+
+  .why-love-it__grid {
+    display: flex;
+    width: 100%;
+    box-sizing: border-box;
+  }
+
+  .why-love-it__content-column {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    box-sizing: border-box;
+  }
+
+  .why-love-it__heading {
+    color: {{ section.settings.heading_color }};
+    font-size: var(--pdp-title-size);
+    line-height: var(--pdp-title-lh);
+    font-weight: 600;
+    margin: 0;
+    font-family: 'Inter';
+    text-transform:capitalize;
+  }
+
+  .why-love-it__subheading {
+    color: {{ section.settings.subheading_color }};
+    font-size: var(--pdp-subheading-size);
+    line-height: var(--pdp-subheading-lh);
+    font-weight: 400;
+    margin: 0;
+    max-width: 100%;
+    font-family: 'Inter', sans-serif;
+  }
+
+  .why-love-it__list {
+    display: flex;
+    flex-direction: column;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    width: 100%;
+  }
+
+  .why-love-it__list-item {
+    display: flex;
+    align-items: center;
+    border-bottom: 1px solid {{ section.settings.border_color }};
+  }
+
+  .why-love-it__list-item:first-child {
+    border-top: 1px solid {{ section.settings.border_color }};
+  }
+
+  .why-love-it__number-badge {
+    border-radius: 50%;
+    background-color: {{ section.settings.badge_bg_color }};
+    color: {{ section.settings.badge_text_color }};
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 600;
+    line-height: 1;
+    flex-shrink: 0;
+  }
+
+  .why-love-it__list-text {
+    color: {{ section.settings.list_text_color }};
+    font-size: var(--pdp-list-text-size);
+    margin: 0;
+    font-family: 'Inter', sans-serif;
+    font-weight: 400;
+  }
+
+  .why-love-it__image-column {
+    position: relative;
+    border-radius: {{ section.settings.image_corner_radius }}px;
+    overflow: hidden;
+  }
+
+  .why-love-it__image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  .why-love-it__placeholder {
+    width: 100%;
+    height: 100%;
+    background-color: #e5e5e5;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .why-love-it__placeholder svg {
+    width: 100px;
+    height: 100px;
+    opacity: 0.4;
+  }
+
+  /* =======================================
+     1. MOBILE: 320px to 767px
+     ======================================= */
+  @media screen and (max-width: 767px) {
+    .why-love-it__grid {
+      flex-direction: column;
+    }
+
+    .why-love-it__content-column {
+      width: 100%;
+      padding: 32px 16px;
+    }
+
+    .why-love-it__heading {
+      margin-bottom: 10px;
+    }
+
+    .why-love-it__subheading {
+      margin-bottom: 16px;
+    }
+
+    .why-love-it__list-item {
+      padding: 10px 0;
+      gap: 10px;
+    }
+
+    .why-love-it__number-badge {
+      width: 30px;
+      height: 30px;
+      min-width: 30px;
+      font-size: 12px;
+    }
+
+    .why-love-it__list-text {
+      line-height: 1.35;
+    }
+
+    .why-love-it__image-column {
+      width: 100%;
+      height: 260px;
+    }
+  }
+
+  /* =======================================
+     2. TABLET: 768px to 1023px
+     ======================================= */
+  @media screen and (min-width: 768px) and (max-width: 1023px) {
+    .why-love-it__grid {
+      flex-direction: column;
+    }
+
+    .why-love-it__content-column {
+      width: 100%;
+      padding: 48px 32px;
+    }
+
+    .why-love-it__heading {
+      margin-bottom: 14px;
+    }
+
+    .why-love-it__subheading {
+      margin-bottom: 20px;
+    }
+
+    .why-love-it__list-item {
+      padding: 14px 0;
+      gap: 14px;
+    }
+
+    .why-love-it__number-badge {
+      width: 36px;
+      height: 36px;
+      min-width: 36px;
+      font-size: 13px;
+    }
+
+    .why-love-it__list-text {
+      line-height: 1.4;
+    }
+
+    .why-love-it__image-column {
+      width: 100%;
+      height: 420px;
+    }
+  }
+
+  /* =======================================
+     3. STANDARD DESKTOP / LAPTOP: 1024px to 1440px
+     ======================================= */
+  @media screen and (min-width: 1024px) and (max-width: 1440px) {
+    .why-love-it__grid {
+      flex-direction: row;
+      align-items: stretch;
+    }
+
+    .why-love-it__content-column {
+      flex: 1 1 50%;
+      padding-top: 60px;
+      padding-bottom: 60px;
+      padding-left: 60px;
+      padding-right: 40px;
+    }
+
+    .why-love-it__heading {
+      margin-bottom: 16px;
+    }
+
+    .why-love-it__subheading {
+      margin-bottom: 20px;
+    }
+
+    .why-love-it__list-item {
+      padding: 16px 0;
+      gap: 16px;
+    }
+
+    .why-love-it__number-badge {
+      width: 38px;
+      height: 38px;
+      min-width: 38px;
+      font-size: 14px;
+    }
+
+    .why-love-it__list-text {
+      line-height: 1.4;
+    }
+
+    .why-love-it__image-column {
+      flex: 1 1 50%;
+      height: auto;
+      align-self: stretch;
+    }
+  }
+
+  /* =======================================
+     4. LARGE DESKTOP: 1441px+
+     ======================================= */
+  @media screen and (min-width: 1441px) {
+    .why-love-it__grid {
+      flex-direction: row;
+      align-items: stretch; /* Fixed: allows image height to stretch to match the left side */
+    }
+
+    .why-love-it__content-column {
+      flex: 1 1 48%;
+      padding-top: 80px;
+      padding-bottom: 80px;
+      padding-left: 110px;
+      padding-right: 70px;
+    }
+
+    .why-love-it__heading {
+      margin-bottom: 16px;
+    }
+
+    .why-love-it__subheading {
+      margin-bottom: 20px;
+    }
+
+    .why-love-it__list-item {
+      padding: 18px 0;
+      gap: 16px;
+    }
+
+    .why-love-it__number-badge {
+      width: 40px;
+      height: 40px;
+      min-width: 40px;
+      font-size: 14px;
+    }
+
+    .why-love-it__list-text {
+      line-height: 1.3;
+    }
+
+    .why-love-it__image-column {
+      flex: 1 1 52%;
+      height: auto;
+      align-self: stretch;
+    }
+  }
+{% endstyle %}
+
+<section class="why-love-it-section-{{ section.id }}">
+  <div class="why-love-it__container">
+    <div class="why-love-it__grid">
+      
+      <!-- Text & Benefits List Column -->
+      <div class="why-love-it__content-column">
+        {% if section.settings.heading != blank %}
+          <h2 class="why-love-it__heading">{{ section.settings.heading }}</h2>
+        {% endif %}
+
+        {% if section.settings.subheading != blank %}
+          <p class="why-love-it__subheading">{{ section.settings.subheading }}</p>
+        {% endif %}
+
+        {% if section.blocks.size > 0 %}
+          <ul class="why-love-it__list">
+            {% for block in section.blocks %}
+              <li class="why-love-it__list-item" {{ block.shopify_attributes }}>
+                <span class="why-love-it__number-badge">{{ forloop.index }}</span>
+                <p class="why-love-it__list-text">{{ block.settings.title }}</p>
+              </li>
+            {% endfor %}
+          </ul>
+        {% endif %}
+      </div>
+
+      <!-- Feature Image Column -->
+      <div class="why-love-it__image-column">
+        {% if section.settings.image != blank %}
+          {{ section.settings.image | image_url: width: 2400 | image_tag:
+            loading: 'lazy',
+            class: 'why-love-it__image',
+            widths: '375, 550, 750, 1100, 1500, 2400',
+            alt: section.settings.image.alt
+          }}
+        {% else %}
+          <div class="why-love-it__placeholder">
+            {{ 'image' | placeholder_svg_tag }}
+          </div>
+        {% endif %}
+      </div>
+
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Why You'll Love It",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Text Settings"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Why You'll Love It"
+    },
+    {
+      "type": "textarea",
+      "id": "subheading",
+      "label": "Subheading",
+      "default": "Discover the key benefits that make the PinJack® a faster, safer, and more efficient way to lift and level pinball machines."
+    },
+    {
+      "type": "header",
+      "content": "Image Settings"
+    },
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Section Image"
+    },
+    {
+      "type": "range",
+      "id": "image_corner_radius",
+      "min": 0,
+      "max": 40,
+      "step": 2,
+      "unit": "px",
+      "label": "Image Corner Radius",
+      "default": 0
+    },
+    {
+      "type": "header",
+      "content": "Color Customization"
+    },
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Background Color",
+      "default": "#F9F9F9"
+    },
+    {
+      "type": "color",
+      "id": "heading_color",
+      "label": "Heading Color",
+      "default": "#000000"
+    },
+    {
+      "type": "color",
+      "id": "subheading_color",
+      "label": "Subheading Color",
+      "default": "#444444"
+    },
+    {
+      "type": "color",
+      "id": "list_text_color",
+      "label": "List Item Text Color",
+      "default": "#111111"
+    },
+    {
+      "type": "color",
+      "id": "badge_bg_color",
+      "label": "Number Badge Background",
+      "default": "#2980B9"
+    },
+    {
+      "type": "color",
+      "id": "badge_text_color",
+      "label": "Number Badge Text Color",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "color",
+      "id": "border_color",
+      "label": "Divider Line Color",
+      "default": "#EAEAEA"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "feature",
+      "name": "Feature Item",
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Feature Text",
+          "default": "Lift one machine corner in seconds"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Why You'll Love It",
+      "blocks": [
+        {
+          "type": "feature",
+          "settings": {
+            "title": "Lift one machine corner in seconds"
+          }
+        },
+        {
+          "type": "feature",
+          "settings": {
+            "title": "One-person operation"
+          }
+        },
+        {
+          "type": "feature",
+          "settings": {
+            "title": "Stable lifting platform"
+          }
+        },
+        {
+          "type": "feature",
+          "settings": {
+            "title": "Precise leveling adjustments"
+          }
+        },
+        {
+          "type": "feature",
+          "settings": {
+            "title": "Durable all-metal construction"
+          }
+        },
+        {
+          "type": "feature",
+          "settings": {
+            "title": "Designed for professionals"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}
